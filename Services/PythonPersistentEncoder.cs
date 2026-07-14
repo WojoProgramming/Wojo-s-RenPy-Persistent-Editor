@@ -25,13 +25,6 @@ namespace WojoPersistentEditor.Services
                 "Encoding.py"
             );
 
-            if (!File.Exists(scriptPath))
-            {
-                throw new FileNotFoundException(
-                    "Encoding.py was not found in the Scripts folder.",
-                    scriptPath
-                );
-            }
 
             string changesPath = Path.Combine(
                 Path.GetTempPath(),
@@ -49,16 +42,23 @@ namespace WojoPersistentEditor.Services
                     )
                 ).ConfigureAwait(false);
 
-                List<PythonCommand> commands = GetPythonCommands();
+                List<PythonCommand> commands =
+                    GetPythonCommands(scriptPath);
+                
+                if (commands.Count == 0)
+                {
+                    throw new FileNotFoundException(
+                        "Neither the bundled encoder nor Encoding.py was found."
+                    );
+                }
+                
                 List<string> unavailableCommands = new List<string>();
-
                 foreach (PythonCommand command in commands)
                 {
                     try
                     {
                         return await RunEncoderAsync(
                             command,
-                            scriptPath,
                             sourcePath,
                             outputPath,
                             changesPath
@@ -132,7 +132,6 @@ namespace WojoPersistentEditor.Services
                 processInfo.ArgumentList.Add(prefixArgument);
             }
 
-            processInfo.ArgumentList.Add(scriptPath);
             processInfo.ArgumentList.Add(sourcePath);
             processInfo.ArgumentList.Add(outputPath);
             processInfo.ArgumentList.Add(changesPath);
@@ -211,24 +210,57 @@ namespace WojoPersistentEditor.Services
             return result;
         }
 
-        private static List<PythonCommand> GetPythonCommands()
-        {
-            List<PythonCommand> commands = new List<PythonCommand>();
+        private static List<PythonCommand> GetPythonCommands(
+    string scriptPath
+)
+{
+    List<PythonCommand> commands = new List<PythonCommand>();
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                commands.Add(new PythonCommand("py", "-3"));
-                commands.Add(new PythonCommand("python"));
-                commands.Add(new PythonCommand("python3"));
-            }
-            else
-            {
-                commands.Add(new PythonCommand("python3"));
-                commands.Add(new PythonCommand("python"));
-            }
+    string toolFileName =
+        RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+            ? "Encoding.exe"
+            : "Encoding";
 
-            return commands;
-        }
+    string toolPath = Path.Combine(
+        AppContext.BaseDirectory,
+        "Tools",
+        toolFileName
+    );
+
+    if (File.Exists(toolPath))
+    {
+        commands.Add(new PythonCommand(toolPath));
+    }
+
+    if (!File.Exists(scriptPath))
+    {
+        return commands;
+    }
+
+    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+    {
+        commands.Add(
+            new PythonCommand("py", "-3", scriptPath)
+        );
+        commands.Add(
+            new PythonCommand("python", scriptPath)
+        );
+        commands.Add(
+            new PythonCommand("python3", scriptPath)
+        );
+    }
+    else
+    {
+        commands.Add(
+            new PythonCommand("python3", scriptPath)
+        );
+        commands.Add(
+            new PythonCommand("python", scriptPath)
+        );
+    }
+
+        return commands;
+    }
 
         private static void DeleteFileIfExists(string filePath)
         {
