@@ -30,6 +30,14 @@ DECODER_INTERNAL_FIELDS = {
     "_decoder_set_items",
 }
 
+# Wewnętrzne pola Ren'Py, których użytkownik nie powinien edytować.
+# Internal Ren'Py fields that should not be exposed for editing.
+HIDDEN_RENPY_FIELDS = {
+    "_seen_translates",
+    # "_seen_ever",
+    # "_chosen",
+}
+
 
 def debug(message: str, enabled: bool) -> None:
     """
@@ -284,8 +292,8 @@ def type_name(value: Any) -> str:
 
 def editor_text(value: Any) -> str:
     """
-    Zwraca tekst, który C# może bezpośrednio wstawić do RichTextBoxa.
-    Returns text that C# can insert directly into a RichTextBox.
+    Zwraca tekst, który C# może bezpośrednio wstawić do pola TextBox.
+    Returns text that C# can insert directly into a TextBox.
     """
     if isinstance(value, str):
         return value
@@ -451,10 +459,60 @@ def encode_object_fields(
 
 def is_editor_collection(value: Any) -> bool:
     """
-    Rozpoznaje typy, których elementy mają dostać osobne RichTextBoxy.
-    Identifies types whose elements should receive separate RichTextBoxes.
+    Rozpoznaje typy, których elementy mają dostać osobne pola TextBox.
+    Identifies types whose elements should receive separate TextBoxes.
     """
     return isinstance(value, (list, tuple, set, frozenset))
+
+
+def is_editor_value_editable(
+    value: Any,
+    active_objects: set[int] | None = None,
+) -> bool:
+    """
+    Sprawdza, czy wartość można bezpiecznie odtworzyć z tekstu edytora.
+    Checks whether a value can be safely reconstructed from editor text.
+    """
+    if value is None or isinstance(
+        value,
+        (bool, str, int, float, complex, bytes, bytearray),
+    ):
+        return True
+
+    if isinstance(value, (Preferences, GenericPickleObject)):
+        return False
+
+    if active_objects is None:
+        active_objects = set()
+
+    object_id = id(value)
+
+    # Cyklicznej struktury nie da się bezpiecznie odtworzyć przez
+    # ast.literal_eval, dlatego pokazujemy ją później tylko w podglądzie.
+    # A cyclic structure cannot be safely reconstructed with
+    # ast.literal_eval, so it is shown as read-only in the future preview.
+    if object_id in active_objects:
+        return False
+
+    active_objects.add(object_id)
+
+    try:
+        if isinstance(value, dict):
+            return all(
+                is_editor_value_editable(key, active_objects) and
+                is_editor_value_editable(item, active_objects)
+                for key, item in value.items()
+            )
+
+        if isinstance(value, (list, tuple, set, frozenset)):
+            return all(
+                is_editor_value_editable(item, active_objects)
+                for item in value
+            )
+
+        return False
+    finally:
+        active_objects.remove(object_id)
 
 
 def make_editor_value(value: Any) -> dict[str, Any]:
@@ -475,6 +533,7 @@ def make_variable(name: str, value: Any) -> dict[str, Any]:
     return {
         "name": name,
         "type": type_name(value),
+        "is_editable": is_editor_value_editable(value),
         "is_collection": is_collection,
         "values": editor_values,
     }
@@ -492,7 +551,10 @@ def persistent_variables(persistent_object: Any) -> list[dict[str, Any]]:
         vars(persistent_object).items(),
         key=lambda item: str(item[0]),
     ):
-        if name in DECODER_INTERNAL_FIELDS:
+        if (
+            name in DECODER_INTERNAL_FIELDS
+            or name in HIDDEN_RENPY_FIELDS
+        ):
             continue
 
         variables.append(make_variable(str(name), value))
