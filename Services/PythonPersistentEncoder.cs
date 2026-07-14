@@ -110,7 +110,6 @@ namespace WojoPersistentEditor.Services
 
         private static async Task<PersistentEncodeResult> RunEncoderAsync(
             PythonCommand command,
-            string scriptPath,
             string sourcePath,
             string outputPath,
             string changesPath
