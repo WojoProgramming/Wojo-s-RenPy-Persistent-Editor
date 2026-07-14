@@ -1,0 +1,72 @@
+name: Cross-platform build test
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        include:
+          - name: Windows x64
+            os: windows-latest
+            rid: win-x64
+            artifact: Windows-x64
+
+          - name: Linux x64
+            os: ubuntu-latest
+            rid: linux-x64
+            artifact: Linux-x64
+
+          - name: macOS Intel
+            os: macos-15-intel
+            rid: osx-x64
+            artifact: macOS-Intel
+
+          - name: macOS Apple Silicon
+            os: macos-latest
+            rid: osx-arm64
+            artifact: macOS-Apple-Silicon
+
+    steps:
+      - name: Download repository
+        uses: actions/checkout@v6
+
+      - name: Install .NET 8
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Install Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Check Python scripts
+        run: python -m py_compile Scripts/Decoding.py Scripts/Encoding.py
+
+      - name: Publish application
+        run: >
+          dotnet publish WojoPersistentEditor.csproj
+          --configuration Release
+          --runtime ${{ matrix.rid }}
+          --self-contained true
+          --output publish/${{ matrix.rid }}
+
+      - name: Upload application package
+        uses: actions/upload-artifact@v6
+        with:
+          name: ${{ matrix.artifact }}
+          path: publish/${{ matrix.rid }}
+          if-no-files-found: error
