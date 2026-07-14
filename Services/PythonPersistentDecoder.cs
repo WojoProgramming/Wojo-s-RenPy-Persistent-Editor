@@ -22,16 +22,17 @@ namespace WojoPersistentEditor.Services
                 "Scripts",
                 "Decoding.py"
             );
-
-            if (!File.Exists(scriptPath))
+            
+            List<PythonCommand> commands =
+                GetPythonCommands(scriptPath);
+            
+            if (commands.Count == 0)
             {
                 throw new FileNotFoundException(
-                    "Decoding.py was not found in the Scripts folder.",
-                    scriptPath
+                    "Neither the bundled decoder nor Decoding.py was found."
                 );
             }
-
-            List<PythonCommand> commands = GetPythonCommands();
+            
             List<string> unavailableCommands = new List<string>();
 
             foreach (PythonCommand command in commands)
@@ -40,7 +41,6 @@ namespace WojoPersistentEditor.Services
                 {
                     return await RunDecoderAsync(
                         command,
-                        scriptPath,
                         persistentPath
                     );
                 }
@@ -59,7 +59,6 @@ namespace WojoPersistentEditor.Services
 
         private static async Task<PersistentDecodeResult> RunDecoderAsync(
             PythonCommand command,
-            string scriptPath,
             string persistentPath
         )
         {
@@ -79,7 +78,6 @@ namespace WojoPersistentEditor.Services
                 processInfo.ArgumentList.Add(prefixArgument);
             }
 
-            processInfo.ArgumentList.Add(scriptPath);
             processInfo.ArgumentList.Add(persistentPath);
             processInfo.Environment["PYTHONIOENCODING"] = "utf-8";
 
@@ -155,25 +153,57 @@ namespace WojoPersistentEditor.Services
             return result;
         }
 
-        private static List<PythonCommand> GetPythonCommands()
-        {
-            List<PythonCommand> commands = new List<PythonCommand>();
+        private static List<PythonCommand> GetPythonCommands(
+    string scriptPath
+)
+{
+    List<PythonCommand> commands = new List<PythonCommand>();
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                commands.Add(new PythonCommand("py", "-3"));
-                commands.Add(new PythonCommand("python"));
-                commands.Add(new PythonCommand("python3"));
-            }
-            else
-            {
-                commands.Add(new PythonCommand("python3"));
-                commands.Add(new PythonCommand("python"));
-            }
+    string toolFileName =
+        RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+            ? "Decoding.exe"
+            : "Decoding";
 
-            return commands;
+    string toolPath = Path.Combine(
+        AppContext.BaseDirectory,
+        "Tools",
+        toolFileName
+    );
+
+    if (File.Exists(toolPath))
+    {
+        commands.Add(new PythonCommand(toolPath));
+    }
+
+    if (!File.Exists(scriptPath))
+    {
+        return commands;
+    }
+
+    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+    {
+        commands.Add(
+            new PythonCommand("py", "-3", scriptPath)
+        );
+        commands.Add(
+            new PythonCommand("python", scriptPath)
+        );
+        commands.Add(
+            new PythonCommand("python3", scriptPath)
+        );
+    }
+    else
+    {
+        commands.Add(
+            new PythonCommand("python3", scriptPath)
+        );
+        commands.Add(
+            new PythonCommand("python", scriptPath)
+            );
         }
-
+    
+        return commands;
+    }
         private sealed class PythonCommand
         {
             public string FileName { get; }
