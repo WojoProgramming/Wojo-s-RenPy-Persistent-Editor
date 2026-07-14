@@ -30,6 +30,14 @@ DECODER_INTERNAL_FIELDS = {
     "_decoder_set_items",
 }
 
+# Wewnętrzne pola Ren'Py, których użytkownik nie powinien edytować.
+# Internal Ren'Py fields that should not be exposed for editing.
+HIDDEN_RENPY_FIELDS = {
+    "_seen_translates",
+   # "_seen_ever",
+    #"_chosen",
+}
+
 
 def debug(message: str, enabled: bool) -> None:
     """
@@ -436,8 +444,11 @@ def encode_object_fields(
         vars(value).items(),
         key=lambda item: str(item[0]),
     ):
-        if field_name in DECODER_INTERNAL_FIELDS:
-            continue
+        if (
+    name in DECODER_INTERNAL_FIELDS
+    or name in HIDDEN_RENPY_FIELDS
+):
+    continue
 
         fields.append(
             {
