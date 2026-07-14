@@ -151,7 +151,8 @@ Variable names may tell you a lot, but they are not always obvious. You can sear
 If the game contains normal `.rpy` files, you can search through them using a code editor. If the files are stored inside an `.rpa` archive, you will need to extract them first.
 
 > [!IMPORTANT]
-> Do not publish someone else's assets or game code. THAT IS THEFT >:( The tools described below are intended for personal analysis, debugging, translations, and other permitted uses.
+> Do not publish someone else's assets or game code. THAT IS THEFT >:(
+> The tools described below are intended for personal analysis, debugging, translations, and other permitted uses.
 
 ## Extracting `.rpa` archives
 
