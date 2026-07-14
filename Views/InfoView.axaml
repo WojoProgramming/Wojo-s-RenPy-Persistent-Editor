@@ -1,0 +1,64 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignWidth="1090"
+             d:DesignHeight="679"
+             x:Class="WojoPersistentEditor.Views.InfoView">
+
+    <StackPanel  Margin="28,18">
+        <StackPanel Spacing="12">
+            <TextBlock HorizontalAlignment="Center"
+                       FontSize="42"
+                       FontWeight="Bold"
+                       Text="Hi there!" />
+
+            <TextBlock HorizontalAlignment="Center"
+                       Margin="0,0,0,10"
+                       FontSize="27"
+                       FontWeight="Bold"
+                       Text="Thank you for downloading the Ren'Py Persistent Editor made by me!" />
+
+            <TextBlock FontSize="17"
+                       FontWeight="SemiBold"
+                       TextWrapping="Wrap">
+                Okay.<LineBreak />
+                First, before touching anything:<LineBreak />
+                It is highly recommended to make a backup of your persistent file, even though the original file itself should not be affected. Just in case!<LineBreak />
+                A tutorial on how to find your persistent file should also be included in the ReadMe.txt file.
+            </TextBlock>
+
+            <TextBlock FontSize="17"
+                       FontWeight="SemiBold"
+                       TextWrapping="Wrap">
+                Before editing, you should also check what the flags mean, so you do not break something. This file can contain important long-term progress, such as unlocked content, choices, settings, or gallery progress. Depending on the game, normal save files may not contain all of this information. Believe me!<LineBreak />
+                A tutorial on how to check the flags should also be included in the ReadMe.txt file.
+            </TextBlock>
+
+            <TextBlock FontSize="17"
+                       FontWeight="SemiBold"
+                       TextWrapping="Wrap">
+                So...<LineBreak />
+                The Preview tab is a window where you can see all variables and their values.<LineBreak />
+                The Editing tab is the place where you can change variable values. It looks almost the same as the Preview window. Why, though? I did not want one window to be used for both looking through values and changing them, because there is a small chance that you could accidentally change one stupid value while just browsing through the flags.<LineBreak />
+                If you find any bugs, please let me know by clicking the Bugs tab! There is a link to a form there.
+            </TextBlock>
+
+            <TextBlock FontSize="17"
+                       FontWeight="SemiBold"
+                       TextWrapping="Wrap">
+                When editing boolean values, always write `True` and `False` with capital letters. That is how Python wants them, so please do not complain to me - complain to Python's creators &gt;:(<LineBreak />
+                Also, please do not try to force text into an integer value just because the text box lets you.<LineBreak />
+                The ReadMe.txt file explains what the different variable types mean.
+            </TextBlock>
+
+            <TextBlock Margin="0,8,0,20"
+                       FontSize="17"
+                       FontWeight="Bold">
+                Hope you find it useful!<LineBreak />
+                WojoProgramming
+            </TextBlock>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

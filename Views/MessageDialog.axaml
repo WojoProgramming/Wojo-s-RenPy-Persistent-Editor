@@ -1,0 +1,48 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        d:DesignWidth="540"
+        d:DesignHeight="240"
+        x:Class="WojoPersistentEditor.Views.MessageDialog"
+        Width="540"
+        MinHeight="220"
+        MaxHeight="500"
+        CanResize="False"
+        ShowInTaskbar="False"
+        SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        Icon="/Assets/Icon.ico"
+        Title="Wojo's Ren'Py Persistent Editor">
+
+    <Grid Margin="28,24"
+          RowDefinitions="Auto,*,Auto"
+          RowSpacing="20">
+        <TextBlock x:Name="HeaderText"
+                   Grid.Row="0"
+                   HorizontalAlignment="Center"
+                   TextAlignment="Center"
+                   TextWrapping="Wrap"
+                   FontSize="24"
+                   FontWeight="Bold" />
+
+        <ScrollViewer Grid.Row="1"
+                      MaxHeight="260"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto">
+            <TextBlock x:Name="MessageText"
+                       TextAlignment="Center"
+                       TextWrapping="Wrap"
+                       FontSize="16"
+                       Foreground="#D6D4E2" />
+        </ScrollViewer>
+
+        <Button Grid.Row="2"
+                Classes="action"
+                Width="160"
+                HorizontalAlignment="Center"
+                Content="OK"
+                Click="OkButton_Click" />
+    </Grid>
+</Window>

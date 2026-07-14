@@ -1,0 +1,55 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="WojoPersistentEditor.App"
+             RequestedThemeVariant="Dark">
+
+    <Application.Resources>
+        <SolidColorBrush x:Key="AppBackgroundBrush" Color="#262433" />
+        <SolidColorBrush x:Key="TopBarBrush" Color="#1B1924" />
+        <SolidColorBrush x:Key="NavigationBrush" Color="#1F1E2A" />
+        <SolidColorBrush x:Key="NavigationButtonBrush" Color="#2C2B3D" />
+        <SolidColorBrush x:Key="NavigationButtonHoverBrush" Color="#38364D" />
+        <SolidColorBrush x:Key="InputBrush" Color="#1B1924" />
+        <SolidColorBrush x:Key="TextBrush" Color="#F5F5F5" />
+    </Application.Resources>
+
+    <Application.Styles>
+        <FluentTheme />
+
+        <Style Selector="Window">
+            <Setter Property="FontFamily" Value="Inter" />
+            <Setter Property="Background" Value="{StaticResource AppBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+        </Style>
+
+        <Style Selector="Button.navigation">
+            <Setter Property="Height" Value="69" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Background" Value="{StaticResource NavigationButtonBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="CornerRadius" Value="0" />
+        </Style>
+
+        <Style Selector="Button.navigation:pointerover">
+            <Setter Property="Background" Value="{StaticResource NavigationButtonHoverBrush}" />
+        </Style>
+
+        <Style Selector="Button.action">
+            <Setter Property="MinWidth" Value="160" />
+            <Setter Property="Height" Value="58" />
+            <Setter Property="Margin" Value="8,0" />
+            <Setter Property="Background" Value="{StaticResource NavigationButtonBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="CornerRadius" Value="0" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+    </Application.Styles>
+</Application>

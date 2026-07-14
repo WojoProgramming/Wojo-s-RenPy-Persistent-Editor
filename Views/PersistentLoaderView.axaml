@@ -1,0 +1,66 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignWidth="1090"
+             d:DesignHeight="679"
+             x:Class="WojoPersistentEditor.Views.PersistentLoaderView">
+
+    <Grid>
+        <StackPanel Width="850"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Spacing="24">
+            <TextBlock HorizontalAlignment="Center"
+                       TextAlignment="Center"
+                       FontSize="38"
+                       FontWeight="Bold"
+                       Text="Select a persistent file" />
+
+            <TextBlock HorizontalAlignment="Center"
+                       TextAlignment="Center"
+                       TextWrapping="Wrap"
+                       FontSize="22"
+                       FontWeight="Bold"
+                       Text="Choose a Ren'Py persistent file to load and view its variables." />
+
+            <Button x:Name="FileSelectorButton"
+                    Width="460"
+                    Height="72"
+                    Margin="0,8,0,8"
+                    HorizontalAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Background="{StaticResource InputBrush}"
+                    Foreground="{StaticResource TextBrush}"
+                    BorderThickness="0"
+                    CornerRadius="0"
+                    FontSize="26"
+                    FontWeight="Bold"
+                    Content="Select file"
+                    Click="FileSelectorButton_Click" />
+
+            <ProgressBar x:Name="LoadingBar"
+                         Width="460"
+                         Height="8"
+                         HorizontalAlignment="Center"
+                         IsIndeterminate="True"
+                         IsVisible="False" />
+
+            <TextBlock x:Name="StatusText"
+                       MaxWidth="850"
+                       HorizontalAlignment="Center"
+                       TextAlignment="Center"
+                       TextWrapping="Wrap"
+                       FontSize="16"
+                       Foreground="#B9B7C8" />
+
+            <TextBlock HorizontalAlignment="Center"
+                       TextAlignment="Center"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Text="The original file will not be modified." />
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignWidth="1090"
+             d:DesignHeight="67"
+             x:Class="WojoPersistentEditor.Controls.VariableEditorControl">
+
+    <Border MinHeight="67"
+            Padding="10,12"
+            Background="{StaticResource AppBackgroundBrush}">
+        <Grid ColumnDefinitions="352,*">
+            <TextBlock x:Name="VariableNameLabel"
+                       Grid.Column="0"
+                       Margin="5,0,15,0"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Center"
+                       TextAlignment="Center"
+                       TextWrapping="Wrap"
+                       FontSize="17"
+                       FontWeight="Bold" />
+
+            <WrapPanel x:Name="ValuesPanel"
+                       Grid.Column="1"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Top"
+                       Orientation="Horizontal" />
+        </Grid>
+    </Border>
+</UserControl>

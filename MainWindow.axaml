@@ -1,0 +1,77 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        d:DesignWidth="1319"
+        d:DesignHeight="779"
+        x:Class="WojoPersistentEditor.MainWindow"
+        Width="1319"
+        Height="779"
+        CanResize="False"
+        WindowStartupLocation="CenterScreen"
+        Icon="/Assets/Icon.ico"
+        Title="Wojo's Ren'Py Persistent Editor">
+
+    <Grid RowDefinitions="100,*"
+          ColumnDefinitions="229,*">
+
+        <Grid Grid.Row="0"
+              Grid.ColumnSpan="2"
+              Background="{StaticResource TopBarBrush}"
+              ColumnDefinitions="120,*,Auto">
+
+            <Image Grid.Column="0"
+                   Width="60"
+                   Height="60"
+                   Source="/Assets/Icon.png"
+                   Stretch="Uniform" />
+
+            <TextBlock Grid.Column="1"
+                       VerticalAlignment="Center"
+                       FontSize="31"
+                       FontWeight="Bold"
+                       Text="Wojo's Ren'Py Persistent Editor" />
+
+            <StackPanel Grid.Column="2"
+                        Margin="16,0,24,0"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                <Button x:Name="SaveButton"
+                        Classes="action"
+                        Content="SAVE"
+                        Click="SaveButton_Click" />
+                <Button x:Name="DownloadButton"
+                        Classes="action"
+                        Content="DOWNLOAD"
+                        Click="DownloadButton_Click" />
+            </StackPanel>
+        </Grid>
+
+        <StackPanel Grid.Row="1"
+                    Grid.Column="0"
+                    Background="{StaticResource NavigationBrush}">
+            <Button Classes="navigation"
+                    Content="INFORMATION"
+                    Click="InfoButton_Click" />
+            <Button Classes="navigation"
+                    Content="PREVIEW"
+                    Click="PreviewButton_Click" />
+            <Button Classes="navigation"
+                    Content="EDITING"
+                    Click="EditingButton_Click" />
+            <Button Classes="navigation"
+                    Content="BUGS"
+                    Click="BugsButton_Click" />
+            <Button Classes="navigation"
+                    Content="CREDITS"
+                    Click="CreditsButton_Click" />
+        </StackPanel>
+
+        <Border Grid.Row="1"
+                Grid.Column="1"
+                Background="{StaticResource AppBackgroundBrush}">
+            <ContentControl x:Name="ContentHost" />
+        </Border>
+    </Grid>
+</Window>
