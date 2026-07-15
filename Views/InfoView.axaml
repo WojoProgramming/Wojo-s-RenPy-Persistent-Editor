@@ -25,7 +25,7 @@
                        TextWrapping="Wrap">
                 Okay.<LineBreak />
                 First, before touching anything:<LineBreak />
-                It is highly recommended to make a backup of your persistent file, even though the original file itself should not be affected. Just in case!<LineBreak />
+                It is highly recommended to read the ReadMe and make a backup of your persistent file, even though the original file itself should not be affected. Just in case!<LineBreak />
                 A tutorial on how to find your persistent file should also be included in the ReadMe.txt file.
             </TextBlock>
 
