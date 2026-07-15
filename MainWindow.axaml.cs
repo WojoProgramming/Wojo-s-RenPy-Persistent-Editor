@@ -310,17 +310,7 @@ namespace WojoPersistentEditor
                         new FilePickerOpenOptions
                         {
                             Title = "Select a Ren'Py persistent file",
-                            AllowMultiple = false,
-                            FileTypeFilter = new[]
-                            {
-                                new FilePickerFileType(
-                                    "Ren'Py persistent files"
-                                )
-                                {
-                                    Patterns = new[] { "persistent*" }
-                                },
-                                FilePickerFileTypes.All
-                            }
+                            AllowMultiple = false
                         }
                     );
             }
