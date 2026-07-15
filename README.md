@@ -269,7 +269,7 @@ Do not publish your own `persistent` file if it may contain private information,
 
 ## Final words
 
-This tool was created because manually digging through thousands of variables does not sound like a particularly good plan. It sounds more like a fast track to losing your sanity.”
+This tool was created because manually digging through thousands of variables does not sound like a particularly good plan. It sounds more like a fast track to losing your sanity.
 
 I hope it saves you some time and prevents at least a few unnecessary disasters.
 
