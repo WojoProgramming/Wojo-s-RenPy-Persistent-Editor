@@ -43,7 +43,7 @@
                         Click="SaveButton_Click" />
                 <Button x:Name="DownloadButton"
                         Classes="action"
-                        Content="DOWNLOAD"
+                        Content="EXPORT"
                         Click="DownloadButton_Click" />
             </StackPanel>
         </Grid>

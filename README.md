@@ -6,6 +6,53 @@ Thank you for downloading my editor for `persistent` files used by games created
 
 The project is developed by **WojoProgramming** and released as open-source software.
 
+## How to Run the Application
+
+You do not need to install Python or .NET. Keep all files from the extracted folder together.
+
+### Windows
+
+1. Download the **Windows x64** package.
+2. Right-click the downloaded `.zip` file and choose **Extract All...**.
+3. Open the extracted folder.
+4. Run `WojoPersistentEditor.exe`.
+
+Windows may show a SmartScreen warning because the application is not code-signed yet. Only choose **More info → Run anyway** if you downloaded it from this project's official GitHub Release or itch.io page.
+
+### macOS
+
+1. Check your Mac type: Apple menu → **About This Mac**.
+2. Download:
+   - **macOS Apple Silicon** for M1, M2, M3, M4, and newer Apple chips;
+   - **macOS Intel** for older Intel-based Macs.
+3. Extract the downloaded `.tar.gz` archive.
+4. Open Terminal in the extracted folder and run:
+
+   ```bash
+   chmod +x WojoPersistentEditor
+   ./WojoPersistentEditor
+   ```
+
+macOS may block the application because it is not code-signed yet. If that happens, try opening it once, then go to **System Settings → Privacy & Security** and choose **Open Anyway**. Only do this for a file downloaded from the official project page.
+
+### Linux
+
+1. Download the **Linux x64** package.
+2. Extract the downloaded `.tar.gz` archive.
+3. Open a terminal in the extracted folder and run:
+
+   ```bash
+   chmod +x WojoPersistentEditor
+   ./WojoPersistentEditor
+   ```
+
+If Ubuntu or Debian reports a missing library such as `libICE.so.6` or ICU, run:
+
+```bash
+sudo apt update
+sudo apt install -y libicu-dev libice6 libsm6
+```
+
 > [!WARNING]
 > The `persistent` file stores things such as permanent progress, unlocked content, previously read text, and game settings. An incorrect modification may cause problems with the game. Always create a backup copy of the file before making any changes.
 
@@ -53,6 +100,10 @@ good_ending (bool)
 ```
 
 Do not change a value into a different type. If a variable was an integer, it must remain an integer. A text box may look innocent, but Python has its own opinion on the matter.
+
+> [!IMPORTANT]
+> A persistent file will not necessarily contain every type listed below.
+> These are only examples of types you may encounter while using the editor.
 
 | Type        | Meaning                                                         | Example of a valid value        |
 | ----------- | --------------------------------------------------------------- | ------------------------------- |
