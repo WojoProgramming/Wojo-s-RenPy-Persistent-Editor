@@ -71,7 +71,8 @@ namespace WojoPersistentEditor
         private async void BugsButton_Click(object? sender, RoutedEventArgs e)
         {
             Uri bugsUri = new Uri(
-                "https://forms.gle/AGsKgWK8eRh6KSRD7"
+                "https://github.com/WojoProgramming/" +
+                "Wojo-s-RenPy-Persistent-Editor/issues/new"
             );
 
             await Launcher.LaunchUriAsync(bugsUri);
@@ -147,7 +148,7 @@ namespace WojoPersistentEditor
                         "Changes saved",
                         encodeResult.AppliedChanges +
                         " variables were saved.\n" +
-                        "Use Download to export the edited " +
+                        "Use Export to export the edited " +
                         "persistent file."
                     );
                 }
@@ -179,8 +180,8 @@ namespace WojoPersistentEditor
             )
             {
                 await ShowMessageAsync(
-                    "Nothing to download",
-                    "Save your changes before downloading."
+                    "Nothing to export",
+                    "Save your changes before exporting."
                 );
                 return;
             }
@@ -218,7 +219,7 @@ namespace WojoPersistentEditor
             catch (Exception error)
             {
                 await ShowMessageAsync(
-                    "Download error",
+                    "Export error",
                     "The export window could not be opened:\n" +
                     error.Message
                 );
@@ -252,7 +253,7 @@ namespace WojoPersistentEditor
                     return;
                 }
 
-                SetBusy(true, "download");
+                SetBusy(true, "export");
 
                 try
                 {
@@ -264,7 +265,7 @@ namespace WojoPersistentEditor
                     ResetLoadedPersistent();
 
                     await ShowMessageAsync(
-                        "Download completed",
+                        "Export completed",
                         "The edited persistent file was exported " +
                         "successfully."
                     );
@@ -272,7 +273,7 @@ namespace WojoPersistentEditor
                 catch (Exception error)
                 {
                     await ShowMessageAsync(
-                        "Download error",
+                        "Export error",
                         "The persistent file could not be exported:\n" +
                         error.Message
                     );
@@ -405,9 +406,9 @@ namespace WojoPersistentEditor
             SaveButton.Content = busy && operation == "save"
                 ? "SAVING..."
                 : "SAVE";
-            DownloadButton.Content = busy && operation == "download"
-                ? "DOWNLOADING..."
-                : "DOWNLOAD";
+            DownloadButton.Content = busy && operation == "export"
+                ? "EXPORTING..."
+                : "EXPORT";
 
             UpdateActionButtons();
         }

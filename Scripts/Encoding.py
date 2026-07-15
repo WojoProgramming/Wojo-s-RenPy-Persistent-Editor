@@ -453,16 +453,32 @@ def apply_change(persistent_object: Any, change: dict[str, Any]) -> None:
 
     original = variables[name]
 
-    if isinstance(original, (list, tuple, set, frozenset)):
-        variables[name] = apply_collection_change(original, editor_values)
-        return
+    try:
+        if isinstance(original, (list, tuple, set, frozenset)):
+            variables[name] = apply_collection_change(
+                original,
+                editor_values,
+            )
+            return
 
-    if len(editor_values) != 1:
-        raise EncodingError(
-            f"Scalar variable '{name}' must contain exactly one value."
+        if len(editor_values) != 1:
+            raise EncodingError(
+                f"Scalar variable '{name}' must contain exactly one value."
+            )
+
+        variables[name] = parse_editor_value(
+            editor_values[0],
+            original,
         )
-
-    variables[name] = parse_editor_value(editor_values[0], original)
+    except EncodingError as error:
+        # Dodajemy nazwę oraz typ zmiennej, aby komunikat w aplikacji mówił
+        # użytkownikowi dokładnie, które pole wymaga poprawy.
+        # Add the variable name and type so the application message tells the
+        # user exactly which field needs to be corrected.
+        raise EncodingError(
+            f"Variable '{name}' ({type_name(original)}) could not be saved: "
+            f"{error}"
+        ) from error
 
 
 def apply_changes(persistent_object: Any, changes: list[dict[str, Any]]) -> None:

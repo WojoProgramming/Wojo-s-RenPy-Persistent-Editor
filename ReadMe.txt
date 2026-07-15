@@ -107,7 +107,7 @@ How to use the editor
     values.
 6.  In the Editing tab, you can modify supported values.
 7.  Click Save to prepare the modified file.
-8.  Click Download to choose where the file should be saved.
+8.  Click Export to choose where the file should be saved.
 
 The program should not overwrite the selected source file. Even so,
 creating a backup is still a very good idea. This is a persistent file.

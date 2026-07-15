@@ -1,6 +1,7 @@
 using System;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Layout;
 using Avalonia.Media;
 using WojoPersistentEditor.Models;
@@ -79,9 +80,6 @@ namespace WojoPersistentEditor.Controls
                 Height = 35,
                 Margin = new Thickness(4),
                 Padding = new Thickness(8, 0),
-                Background = new SolidColorBrush(
-                    Color.Parse("#1B1924")
-                ),
                 Foreground = new SolidColorBrush(
                     Color.Parse("#F5F5F5")
                 ),
@@ -93,8 +91,27 @@ namespace WojoPersistentEditor.Controls
                 AcceptsReturn = false,
                 IsReadOnly = isPreviewMode,
                 IsTabStop = !isPreviewMode,
+                Focusable = !isPreviewMode,
+                Cursor = isPreviewMode
+                    ? new Cursor(StandardCursorType.Arrow)
+                    : null,
                 VerticalContentAlignment = VerticalAlignment.Center
             };
+
+            if (isPreviewMode)
+            {
+                // Styl korzysta z tego samego zasobu co tło widoku, więc
+                // zmiana koloru aplikacji automatycznie zmieni też Preview.
+                // The style uses the same resource as the view background,
+                // so changing the application color also updates Preview.
+                valueBox.Classes.Add("preview-value");
+            }
+            else
+            {
+                valueBox.Background = new SolidColorBrush(
+                    Color.Parse("#1B1924")
+                );
+            }
 
             ToolTip.SetTip(valueBox, editorValue.Text);
 

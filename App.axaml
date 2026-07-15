@@ -39,6 +39,10 @@
             <Setter Property="Background" Value="{StaticResource NavigationButtonHoverBrush}" />
         </Style>
 
+        <Style Selector="TextBox.preview-value">
+            <Setter Property="Background" Value="{StaticResource AppBackgroundBrush}" />
+        </Style>
+
         <Style Selector="Button.action">
             <Setter Property="MinWidth" Value="160" />
             <Setter Property="Height" Value="58" />
